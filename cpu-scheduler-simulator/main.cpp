@@ -1,11 +1,27 @@
-#include "mainwindow.h"
+#include <iostream>
+#include <vector>
+#include "Process.h"
+#include "FCFS.h"
 
-#include <QApplication>
+int main() {
+    std::vector<Process> processes = {
+        Process("P1", 0, 4),
+        Process("P2", 2, 3),
+        Process("P3", 3, 1)
+    };
 
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
+    FCFS fcfs;
+    fcfs.execute(processes);
+
+    for (const auto& p : processes) {
+        std::cout << "Process " << p.getId()
+                  << " | Start: " << p.getStartTime()
+                  << " | Finish: " << p.getFinishTime()
+                  << " | Waiting: " << p.getWaitingTime()
+                  << " | Turnaround: " << p.getTurnaroundTime()
+                  << std::endl;
+    }
+
+    return 0;
 }
+
