@@ -1,27 +1,25 @@
 #include <iostream>
-#include <vector>
+#include "CPU.h"
 #include "Process.h"
-#include "FCFS.h"
+#include "Thread.h"
+#include "FCFSScheduler.h"
 
 int main() {
-    std::vector<Process> processes = {
-        Process("P1", 0, 4),
-        Process("P2", 2, 3),
-        Process("P3", 3, 1)
-    };
+    // Step 1: Create Scheduler
+    FCFSScheduler scheduler;
 
-    FCFS fcfs;
-    fcfs.execute(processes);
+    // Step 2: Create Processes & Threads
+    Process* p1 = new Process(1, 0);
+    p1->addThread(new Thread(101, 5, p1));
+    p1->addThread(new Thread(102, 3, p1));
 
-    for (const auto& p : processes) {
-        std::cout << "Process " << p.getId()
-                  << " | Start: " << p.getStartTime()
-                  << " | Finish: " << p.getFinishTime()
-                  << " | Waiting: " << p.getWaitingTime()
-                  << " | Turnaround: " << p.getTurnaroundTime()
-                  << std::endl;
-    }
+    Process* p2 = new Process(2, 2);
+    p2->addThread(new Thread(201, 4, p2));
 
-    return 0;
+    // Step 3: Add to scheduler
+    scheduler.addProcess(p1);
+    scheduler.addProcess(p2);
+
+    // Step 4: Create CPU
+    CPU cpu;
 }
-

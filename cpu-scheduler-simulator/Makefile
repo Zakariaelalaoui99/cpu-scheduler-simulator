@@ -1,22 +1,36 @@
-# Compiler
+# Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall
+CXXFLAGS = -std=c++17 -Wall -Wextra -O2
 
-# Output
-TARGET = scheduler_sim
+# Source files
+SRC = main.cpp \
+      CPU.cpp \
+      Thread.cpp \
+      Process.cpp \
+      Event.cpp \
+      EventQueue.cpp \
+      FCFSScheduler.cpp \
+      RoundRobinScheduler.cpp
 
-# Source and object files
-SRC = main.cpp Process.cpp FCFS.cpp
+# Object files
 OBJ = $(SRC:.cpp=.o)
 
-# Build target
-$(TARGET): $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJ)
+# Executable name
+TARGET = simulator
 
-# Object file rules
+# Default rule
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Clean build
+# Clean rule
 clean:
-	rm -f *.o $(TARGET)
+	rm -f $(OBJ) $(TARGET)
+
+# Run the simulator (optional s
+run: $(TARGET)
+	./$(TARGET)
