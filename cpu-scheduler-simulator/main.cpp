@@ -3,8 +3,14 @@
 #include "Process.h"
 #include "Thread.h"
 #include "FCFSScheduler.h"
+#include <QApplication>
+#include "mainwindow.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);
+        MainWindow w;
+        w.show();
+        return app.exec();
     // Step 1: Create Scheduler
     FCFSScheduler scheduler;
 
